@@ -19,9 +19,21 @@ class Person
         echo "Name: ";
         $this->name = readline();
     }
+
     function printPerson()
     {
         echo $this->age . "\t\t";
         echo $this->name . str_repeat(" ", 14-strlen($this->name));
+    }
+
+    function setParametersToPerson($list)
+    {
+       $this->name = $list[0];
+       $this->age = $list[1];
+    }
+
+    function writePersonToDataBase($file)
+    {
+        fwrite($file, $this->name . " " . $this->age . " ");
     }
 }

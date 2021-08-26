@@ -26,4 +26,16 @@ class Patient extends Person
         parent::printPerson();
         echo $this->illness . "\n";
     }
+
+    function setParametersToElement($list)
+    {
+        parent::setParametersToPerson($list);
+        $this->illness = $list[2];
+    }
+
+    function writeElementToDataBase($file)
+    {
+        parent::writePersonToDataBase($file);
+        fwrite($file, $this->illness . "\n");
+    }
 }

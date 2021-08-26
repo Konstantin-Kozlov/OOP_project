@@ -21,10 +21,22 @@ class Doctor extends Person
         $this->speciality = readline();
     }
 
-    public function printElement($ind)
+    function printElement($ind)
     {
         echo $ind . "\t";
         parent::printPerson();
         echo $this->speciality . "\n";
+    }
+
+    function setParametersToElement($list)
+    {
+        parent::setParametersToPerson($list);
+        $this->speciality = $list[2];
+    }
+
+    function writeElementToDataBase($file)
+    {
+        parent::writePersonToDataBase($file);
+        fwrite($file, $this->speciality . "\n");
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
-class Factory {
+class Factory
+{
     public function buildPatient()
     {
         return new Patient();
@@ -20,6 +21,5 @@ class Factory {
         $patient = $this->buildPatient();
         $doctor = $this->buildDoctor();
         return $this->buildPolyclinic($patient, $doctor);
-
     }
 }
