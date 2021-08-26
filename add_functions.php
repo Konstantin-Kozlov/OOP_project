@@ -25,3 +25,28 @@ function getInt($spec)
     }
     return $ans;
 }
+
+function systemPause()
+{
+    echo "\nClick any guide to continue ...";
+    readline();
+    echo "\n";
+}
+
+function printTitlePatients()
+{
+    echo "---- Patients ----\n";
+    echo "№:\t";
+    echo "Age:\t";
+    echo "Name:" . str_repeat(" ", 9);
+    echo "Illness:\n";
+}
+
+function printTitleDoctors()
+{
+    echo "---- Doctors ----\n";
+    echo "№:\t";
+    echo "Age:\t";
+    echo "Name:" . str_repeat(" ", 9);
+    echo "Specialty:\n";
+}

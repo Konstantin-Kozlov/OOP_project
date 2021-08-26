@@ -9,7 +9,6 @@ class Polyclinic
      * @var Doctor[]
      */
 
-
     private $countPatients;
     private $listPatients = [];
     private $countDoctors;
@@ -68,28 +67,12 @@ class Polyclinic
         }
     }
 
-    function printTitlePatients(){
-        echo "---- Patients ----\n";
-        echo "№:\t";
-        echo "Age:\t";
-        echo "Name:" . str_repeat(" ", 9);
-        echo "Illness:\n";
-    }
-
-    function printTitleDoctors(){
-        echo "---- Doctors ----\n";
-        echo "№:\t";
-        echo "Age:\t";
-        echo "Name:" . str_repeat(" ", 9);
-        echo "Specialty:\n";
-    }
-
     function printDataBase() {
         echo "Data Base:\n";
 
         if ($this->countPatients != 0)
         {
-            $this->printTitlePatients();
+            printTitlePatients();
             for ($i = 0; $i < $this->countPatients; $i++) {
                 $this -> listPatients[$i] -> printElement($i+1);
             }
@@ -101,7 +84,7 @@ class Polyclinic
 
         if ($this->countDoctors != 0)
         {
-            $this->printTitleDoctors();
+            printTitleDoctors();
             for ($i = 0; $i < $this->countDoctors; $i++) {
                 $this -> listDoctors[$i] -> printElement($i+1);
             }
@@ -110,5 +93,37 @@ class Polyclinic
             echo "---- Doctors ----\n";
             echo "Empty list of doctors\n";
         }
+    }
+
+    function readFromDataBase(){
+        $array1 = file("dbPatients.txt", FILE_IGNORE_NEW_LINES);
+        $this->countPatients = count($array1);
+        for ($i = 0; $i < $this->countPatients; $i++) {
+            $this->listPatients[$i] = new Patient();
+            $list = explode(" ", $array1[$i]);
+            $this->listPatients[$i]->setParametersToElement($list);
+        }
+
+        $array2 = file("dbDoctors.txt", FILE_IGNORE_NEW_LINES);
+        $this->countDoctors = count($array2);
+        for ($i = 0; $i < $this->countDoctors; $i++) {
+            $this->listDoctors[$i] = new Doctor();
+            $list = explode(" ", $array2[$i]);
+            $this->listDoctors[$i]->setParametersToElement($list);
+        }
+    }
+
+    function writeToDataBase(){
+        $fileDBPatients = fopen("dbPatients.txt", "a");
+        ftruncate($fileDBPatients, 0); // clear file
+        for ($i = 0; $i < $this->countPatients; $i++)
+            $this->listPatients[$i]->writeElementToDataBase($fileDBPatients);
+        fclose($fileDBPatients);
+
+        $fileDBDoctors = fopen("dbDoctors.txt", "a");
+        ftruncate($fileDBDoctors, 0); // clear file
+        for ($i = 0; $i < $this->countDoctors; $i++)
+            $this->listDoctors[$i]->writeElementToDataBase($fileDBDoctors);
+        fclose($fileDBDoctors);
     }
 }

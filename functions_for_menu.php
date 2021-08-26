@@ -18,6 +18,18 @@ function getMenuItem()
 
 function menu($hos)
 {
+    if (filesize("dbPatients.txt") || filesize("dbDoctors.txt"))
+    {
+        $hos->readFromDataBase();
+        echo "There are records in the files.\n";
+        echo "Do you want to print them? [y/n]: ";
+        $str = readline();
+        if ($str == "y") {
+            $hos->printDataBase();
+            systemPause();
+        }
+    }
+
     do {
         printMenu();
         $item = getMenuItem();
@@ -35,9 +47,10 @@ function menu($hos)
                 break;
         }
         if ($item != 4) {
-            echo "\nClick any guide to continue ...";
-            readline();
-            echo "\n";
+            systemPause();
         }
     } while($item != 4);
+
+    echo "Data is successfully written to a file.";
+    $hos->writeToDataBase();
 }
